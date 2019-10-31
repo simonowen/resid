@@ -31,7 +31,7 @@
 // The period of this counter is set to 1, 2, 4, 8, 16, 30 at the envelope
 // counter values 255, 93, 54, 26, 14, 6, respectively.
 // ----------------------------------------------------------------------------
-class EnvelopeGenerator
+class RESID_API EnvelopeGenerator
 {
 public:
   EnvelopeGenerator();

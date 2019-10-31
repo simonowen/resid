@@ -30,7 +30,7 @@
 // The noise waveform is taken from intermediate bits of a 23 bit shift
 // register. This register is clocked by bit 19 of the accumulator.
 // ----------------------------------------------------------------------------
-class WaveformGenerator
+class RESID_API WaveformGenerator
 {
 public:
   WaveformGenerator();

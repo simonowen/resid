@@ -24,7 +24,7 @@
 #include "wave.h"
 #include "envelope.h"
 
-class Voice
+class RESID_API Voice
 {
 public:
   Voice();

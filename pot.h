@@ -22,7 +22,7 @@
 
 #include "siddefs.h"
 
-class Potentiometer
+class RESID_API Potentiometer
 {
 public:
   reg8 readPOT();

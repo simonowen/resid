@@ -64,4 +64,14 @@ const char* resid_version_string = VERSION;
 #define RESID_INLINING 1
 #define RESID_INLINE inline
 
+#ifdef RESID_DLL
+#ifdef RESID_EXPORTS
+#define RESID_API __declspec(dllexport)
+#else
+#define RESID_API __declspec(dllimport)
+#endif // RESID_EXPORTS
+#else // !RESID_DLL
+#define RESID_API
+#endif // RESID_DLL
+
 #endif // not __SIDDEFS_H__

@@ -20,6 +20,10 @@ if (BUILD_STATIC AND NOT BUILD_FRAMEWORK)
   add_library(${PROJECT_NAME} STATIC ${SOURCES} ${API_HEADERS})
 else()
   add_library(${PROJECT_NAME} SHARED ${SOURCES} ${API_HEADERS})
+
+  if(WIN32)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE RESID_DLL=1 RESID_EXPORTS=1)
+  endif()
 endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

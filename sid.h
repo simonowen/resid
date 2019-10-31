@@ -26,7 +26,7 @@
 #include "extfilt.h"
 #include "pot.h"
 
-class SID
+class RESID_API SID
 {
 public:
   SID();

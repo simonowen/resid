@@ -35,7 +35,7 @@
 // of kHz. This calls for a sampling frequency of several MHz, which is far
 // too high for practical use.
 // ----------------------------------------------------------------------------
-class ExternalFilter
+class RESID_API ExternalFilter
 {
 public:
   ExternalFilter();
