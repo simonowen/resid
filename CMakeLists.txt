@@ -6,24 +6,21 @@ set(MAJOR_VER 5)
 set(MINOR_VER 0)
 set(PATCH_VER 0)
 
-option(BUILD_STATIC "Build a static library instead of dynamic" OFF)
+option(BUILD_SHARED_LIBS "Build a dynamic library instead of static library" ON)
 
 if (APPLE)
   option(BUILD_FRAMEWORK "Build a Mac OS X framework instead of a shared library" OFF)
   set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+  set(BUILD_SHARED_LIBS ON)
 endif ()
 
 file(GLOB SOURCES *.cc)
 set(API_HEADERS envelope.h extfilt.h filter.h pot.h sid.h siddefs.h spline.h voice.h wave.h)
 
-if (BUILD_STATIC AND NOT BUILD_FRAMEWORK)
-  add_library(${PROJECT_NAME} STATIC ${SOURCES} ${API_HEADERS})
-else()
-  add_library(${PROJECT_NAME} SHARED ${SOURCES} ${API_HEADERS})
+add_library(${PROJECT_NAME} ${SOURCES} ${API_HEADERS})
 
-  if(WIN32)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE RESID_DLL=1 RESID_EXPORTS=1)
-  endif()
+if (WIN32 AND BUILD_SHARED_LIBS)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE RESID_DLL=1 RESID_EXPORTS=1)
 endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
