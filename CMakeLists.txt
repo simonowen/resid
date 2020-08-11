@@ -6,20 +6,26 @@ set(MAJOR_VER 5)
 set(MINOR_VER 0)
 set(PATCH_VER 0)
 
-option(BUILD_SHARED_LIBS "Build a dynamic library instead of static library" ON)
+option(SIDPLAY_BUILD_SHARED "Build a dynamic library instead of static library" OFF)
 
 if (APPLE)
-  option(BUILD_FRAMEWORK "Build a Mac OS X framework instead of a shared library" OFF)
-  set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
-  set(BUILD_SHARED_LIBS ON)
+  option(SIDPLAY_BUILD_FRAMEWORK "Build the library as a macOS framework" OFF)
+  option(SIDPLAY_BUILD_UNIVERSAL "Build the shared/framework library as a universal binary" ON)
+  if (SIDPLAY_BUILD_UNIVERSAL)
+    set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+  endif()
 endif ()
 
 file(GLOB SOURCES *.cc)
 set(API_HEADERS envelope.h extfilt.h filter.h pot.h sid.h siddefs.h spline.h voice.h wave.h)
 
-add_library(${PROJECT_NAME} ${SOURCES} ${API_HEADERS})
+if (SIDPLAY_BUILD_SHARED OR SIDPLAY_BUILD_FRAMEWORK)
+  add_library(${PROJECT_NAME} SHARED ${SOURCES} ${API_HEADERS})
+else()
+  add_library(${PROJECT_NAME} ${SOURCES} ${API_HEADERS})
+endif()
 
-if (WIN32 AND BUILD_SHARED_LIBS)
+if (WIN32 AND SIDPLAY_BUILD_SHARED)
   target_compile_definitions(${PROJECT_NAME} PRIVATE RESID_DLL=1 RESID_EXPORTS=1)
 endif()
 
@@ -31,7 +37,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_BINARY_DIR})
 
-if (APPLE AND BUILD_FRAMEWORK)
+if (APPLE AND SIDPLAY_BUILD_FRAMEWORK)
   set_target_properties(${PROJECT_NAME} PROPERTIES
     OUTPUT_NAME ${PROJECT_NAME}
     FRAMEWORK TRUE
@@ -51,6 +57,6 @@ install(TARGETS ${PROJECT_NAME}
   FRAMEWORK DESTINATION "/Library/Frameworks"
   PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
 
-if (NOT APPLE OR NOT BUILD_FRAMEWORK)
+if (NOT APPLE OR NOT SIDPLAY_BUILD_FRAMEWORK)
   install(FILES ${API_HEADERS} DESTINATION include/${PROJECT_NAME})
 endif ()
