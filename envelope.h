@@ -51,21 +51,21 @@ public:
   RESID_INLINE reg8 output();
 
 protected:
-  reg16 rate_counter;
-  reg16 rate_period;
-  reg8 exponential_counter;
-  reg8 exponential_counter_period;
-  reg8 envelope_counter;
-  bool hold_zero;
+  reg16 rate_counter = 0;
+  reg16 rate_period = 0;
+  reg8 exponential_counter = 0;
+  reg8 exponential_counter_period = 0;
+  reg8 envelope_counter = 0;
+  bool hold_zero = false;
 
-  reg4 attack;
-  reg4 decay;
-  reg4 sustain;
-  reg4 release;
+  reg4 attack = 0;
+  reg4 decay = 0;
+  reg4 sustain = 0;
+  reg4 release = 0;
 
-  reg8 gate;
+  reg8 gate = 0;
 
-  State state;
+  State state = {};
 
   // Lookup table to convert from attack, decay, or release value to rate
   // counter period.

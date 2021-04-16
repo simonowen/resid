@@ -54,28 +54,28 @@ public:
   RESID_INLINE reg12 output();
 
 protected:
-  const WaveformGenerator* sync_source;
-  WaveformGenerator* sync_dest;
+  const WaveformGenerator* sync_source = nullptr;
+  WaveformGenerator* sync_dest = nullptr;
 
   // Tell whether the accumulator MSB was set high on this cycle.
-  bool msb_rising;
+  bool msb_rising = false;
 
-  reg24 accumulator;
-  reg24 shift_register;
+  reg24 accumulator = 0;
+  reg24 shift_register = 0;
 
   // Fout  = (Fn*Fclk/16777216)Hz
-  reg16 freq;
+  reg16 freq = 0;
   // PWout = (PWn/40.95)%
-  reg12 pw;
+  reg12 pw = 0;
 
   // The control register right-shifted 4 bits; used for output function
   // table lookup.
-  reg8 waveform;
+  reg8 waveform = 0;
 
   // The remaining control register bits.
-  reg8 test;
-  reg8 ring_mod;
-  reg8 sync;
+  reg8 test = 0;
+  reg8 ring_mod = 0;
+  reg8 sync = 0;
   // The gate bit is handled by the EnvelopeGenerator.
 
   // 16 possible combinations of waveforms.
@@ -107,10 +107,10 @@ protected:
   static reg8 wave8580_PS_[];
   static reg8 wave8580_PST[];
 
-  reg8* wave__ST;
-  reg8* wave_P_T;
-  reg8* wave_PS_;
-  reg8* wave_PST;
+  reg8* wave__ST = nullptr;
+  reg8* wave_P_T = nullptr;
+  reg8* wave_PS_ = nullptr;
+  reg8* wave_PST = nullptr;
 
 friend class Voice;
 friend class SID;

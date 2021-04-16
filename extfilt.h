@@ -52,19 +52,19 @@ public:
 
 protected:
   // Filter enabled.
-  bool enabled;
+  bool enabled = false;
 
   // Maximum mixer DC offset.
-  sound_sample mixer_DC;
+  sound_sample mixer_DC = 0;
 
   // State of filters.
-  sound_sample Vlp; // lowpass
-  sound_sample Vhp; // highpass
-  sound_sample Vo;
+  sound_sample Vlp = 0; // lowpass
+  sound_sample Vhp = 0; // highpass
+  sound_sample Vo = 0;
 
   // Cutoff frequencies.
-  sound_sample w0lp;
-  sound_sample w0hp;
+  sound_sample w0lp = 0;
+  sound_sample w0hp = 0;
 
 friend class SID;
 };
