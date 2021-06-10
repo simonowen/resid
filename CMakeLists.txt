@@ -12,7 +12,7 @@ if (APPLE)
   option(SIDPLAY_BUILD_FRAMEWORK "Build the library as a macOS framework" OFF)
   option(SIDPLAY_BUILD_UNIVERSAL "Build the shared/framework library as a universal binary" ON)
   if (SIDPLAY_BUILD_UNIVERSAL)
-    set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
   endif()
 endif ()
 
