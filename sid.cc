@@ -889,12 +889,12 @@ int SID::clock_resample_interpolate(cycle_count& delta_t, short* buf, int n,
     sample_offset = next_sample_offset & FIXP_MASK;
 
     int fir_offset = sample_offset*fir_RES >> FIXP_SHIFT;
-    int fir_offset_rmd = sample_offset*fir_RES & FIXP_MASK;
+    int64_t fir_offset_rmd = sample_offset*fir_RES & FIXP_MASK;
     short* fir_start = fir + fir_offset*fir_N;
     short* sample_start = sample + sample_index - fir_N + RINGSIZE;
 
     // Convolution with filter impulse response.
-    int v1 = 0;
+    int64_t v1 = 0;
     for (int j = 0; j < fir_N; j++) {
       v1 += sample_start[j]*fir_start[j];
     }
@@ -908,7 +908,7 @@ int SID::clock_resample_interpolate(cycle_count& delta_t, short* buf, int n,
     fir_start = fir + fir_offset*fir_N;
 
     // Convolution with filter impulse response.
-    int v2 = 0;
+    int64_t v2 = 0;
     for (int j = 0; j < fir_N; j++) {
       v2 += sample_start[j]*fir_start[j];
     }
@@ -916,7 +916,7 @@ int SID::clock_resample_interpolate(cycle_count& delta_t, short* buf, int n,
     // Linear interpolation.
     // fir_offset_rmd is equal for all samples, it can thus be factorized out:
     // sum(v1 + rmd*(v2 - v1)) = sum(v1) + rmd*(sum(v2) - sum(v1))
-    int v = v1 + (fir_offset_rmd*(v2 - v1) >> FIXP_SHIFT);
+    int64_t v = v1 + (fir_offset_rmd*(v2 - v1) >> FIXP_SHIFT);
 
     v >>= FIR_SHIFT;
 
