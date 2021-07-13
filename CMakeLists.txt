@@ -10,7 +10,7 @@ option(SIDPLAY_BUILD_SHARED "Build a dynamic library instead of static library" 
 
 if (APPLE)
   option(SIDPLAY_BUILD_FRAMEWORK "Build the library as a macOS framework" OFF)
-  option(SIDPLAY_BUILD_UNIVERSAL "Build the shared/framework library as a universal binary" ON)
+  option(SIDPLAY_BUILD_UNIVERSAL "Build the shared/framework library as a universal binary" OFF)
   if (SIDPLAY_BUILD_UNIVERSAL)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
   endif()
@@ -33,9 +33,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${SRC_VER}
   SOVERSION ${MAJOR_VER}
   CXX_STANDARD 11)
-
-target_include_directories(${PROJECT_NAME} PRIVATE
-  ${CMAKE_BINARY_DIR})
 
 if (APPLE AND SIDPLAY_BUILD_FRAMEWORK)
   set_target_properties(${PROJECT_NAME} PROPERTIES
