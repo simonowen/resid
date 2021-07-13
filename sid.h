@@ -31,6 +31,8 @@ class RESID_API SID
 public:
   SID();
   ~SID();
+  SID(const SID &other) = delete; // prevent copying
+  SID& operator=(const SID& other) = delete; // prevent assignment
 
   void set_chip_model(chip_model model);
   void enable_filter(bool enable);
@@ -60,18 +62,18 @@ public:
 
     char sid_register[0x20];
 
-    reg8 bus_value;
-    cycle_count bus_value_ttl;
+    reg8 bus_value = 0;
+    cycle_count bus_value_ttl = 0;
 
-    reg24 accumulator[3];
-    reg24 shift_register[3];
-    reg16 rate_counter[3];
-    reg16 rate_counter_period[3];
-    reg16 exponential_counter[3];
-    reg16 exponential_counter_period[3];
-    reg8 envelope_counter[3];
-    EnvelopeGenerator::State envelope_state[3];
-    bool hold_zero[3];
+    reg24 accumulator[3] = {};
+    reg24 shift_register[3] = {};
+    reg16 rate_counter[3] = {};
+    reg16 rate_counter_period[3] = {};
+    reg16 exponential_counter[3] = {};
+    reg16 exponential_counter_period[3] = {};
+    reg8 envelope_counter[3] = {};
+    EnvelopeGenerator::State envelope_state[3] = {};
+    bool hold_zero[3] = {};
   };
     
   State read_state();
@@ -96,19 +98,19 @@ protected:
   RESID_INLINE int clock_resample_fast(cycle_count& delta_t, short* buf,
 				       int n, int interleave);
 
-  Voice voice[3];
-  Filter filter;
-  ExternalFilter extfilt;
-  Potentiometer potx;
-  Potentiometer poty;
+  Voice voice[3] = {};
+  Filter filter = {};
+  ExternalFilter extfilt = {};
+  Potentiometer potx = {};
+  Potentiometer poty = {};
 
-  reg8 bus_value;
-  cycle_count bus_value_ttl;
+  reg8 bus_value = {};
+  cycle_count bus_value_ttl = 0;
 
-  double clock_frequency;
+  double clock_frequency = 0;
 
   // External audio input.
-  int ext_in;
+  int ext_in = 0;
 
   // Resampling constants.
   // The error in interpolated lookup is bounded by 1.234/L^2,
@@ -128,19 +130,19 @@ protected:
   static const int FIXP_MASK = 0xffff;
 
   // Sampling variables.
-  sampling_method sampling;
-  cycle_count cycles_per_sample;
-  cycle_count sample_offset;
-  int sample_index;
-  short sample_prev;
-  int fir_N;
-  int fir_RES;
+  sampling_method sampling = {};
+  cycle_count cycles_per_sample = 0;
+  cycle_count sample_offset = 0;
+  int sample_index = 0;
+  short sample_prev = 0;
+  int fir_N = 0;
+  int fir_RES = 0;
 
   // Ring buffer with overflow for contiguous storage of RINGSIZE samples.
-  short* sample;
+  short* sample = nullptr;
 
   // FIR_RES filter tables (FIR_N*FIR_RES).
-  short* fir;
+  short* fir = nullptr;
 };
 
 #endif // not __SID_H__

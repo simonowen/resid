@@ -153,48 +153,50 @@ protected:
   void set_Q();
 
   // Filter enabled.
-  bool enabled;
+  bool enabled = false;
 
   // Filter cutoff frequency.
-  reg12 fc;
+  reg12 fc = 0;
 
   // Filter resonance.
-  reg8 res;
+  reg8 res = 0;
 
   // Selects which inputs to route through filter.
-  reg8 filt;
+  reg8 filt = 0;
 
   // Switch voice 3 off.
-  reg8 voice3off;
+  reg8 voice3off = 0;
 
   // Highpass, bandpass, and lowpass filter modes.
-  reg8 hp_bp_lp;
+  reg8 hp_bp_lp = 0;
 
   // Output master volume.
-  reg4 vol;
+  reg4 vol = 0;
 
   // Mixer DC offset.
-  sound_sample mixer_DC;
+  sound_sample mixer_DC = 0;
 
   // State of filter.
-  sound_sample Vhp; // highpass
-  sound_sample Vbp; // bandpass
-  sound_sample Vlp; // lowpass
-  sound_sample Vnf; // not filtered
+  sound_sample Vhp = 0; // highpass
+  sound_sample Vbp = 0; // bandpass
+  sound_sample Vlp = 0; // lowpass
+  sound_sample Vnf = 0; // not filtered
 
   // Cutoff frequency, resonance.
-  sound_sample w0, w0_ceil_1, w0_ceil_dt;
-  sound_sample _1024_div_Q;
+  sound_sample w0 = 0; 
+  sound_sample w0_ceil_1 = 0;
+  sound_sample w0_ceil_dt = 0;
+  sound_sample _1024_div_Q = 0;
 
   // Cutoff frequency tables.
   // FC is an 11 bit register.
   sound_sample f0_6581[2048];
   sound_sample f0_8580[2048];
-  sound_sample* f0;
+  sound_sample* f0 = nullptr;
   static fc_point f0_points_6581[];
   static fc_point f0_points_8580[];
-  fc_point* f0_points;
-  int f0_count;
+  fc_point* f0_points = nullptr;
+  int f0_count = 0;
 
 friend class SID;
 };
