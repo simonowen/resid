@@ -40,14 +40,14 @@ public:
   RESID_INLINE sound_sample output();
 
 protected:
-  WaveformGenerator wave;
-  EnvelopeGenerator envelope;
+  WaveformGenerator wave = {};
+  EnvelopeGenerator envelope = {};
 
   // Waveform D/A zero level.
-  sound_sample wave_zero;
+  sound_sample wave_zero = 0;
 
   // Multiplying D/A DC offset.
-  sound_sample voice_DC;
+  sound_sample voice_DC = 0;
 
 friend class SID;
 };
