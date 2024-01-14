@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.14..3.28)
 project(resid)
 
 set(SRC_VER 0.16)
